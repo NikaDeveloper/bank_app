@@ -101,3 +101,9 @@ pprint(sorted_data_asc)
 └── pyproject.toml
 └── poetry.lock
 ```
+## Тестирование
+
+Для запуска тестов:
+
+```bash
+pytest
