@@ -6,7 +6,13 @@ def get_mask_card_number(card_number: Union[str, int]) -> str:
     card_number_str = str(card_number)
     if not card_number_str.isdigit():
         return "Некорректный номер карты"
-    masked_parts = [card_number_str[:4], card_number_str[4:6], "**", "****", card_number_str[-4:]]
+    masked_parts = [
+        card_number_str[:4],
+        card_number_str[4:6],
+        "**",
+        "****",
+        card_number_str[-4:],
+    ]
     return " ".join(masked_parts)
 
 

@@ -36,7 +36,7 @@ def mask_account_card(requisites: str) -> str:
         if len(number) < 13 or len(number) > 19:  # Пример проверки длины номера карты
             return "Ошибка: Некорректная длина номера карты"
         masked = get_mask_card_number(number)
-        type_info = requisites[:requisites.rfind(number)].strip()
+        type_info = requisites[: requisites.rfind(number)].strip()
         return f"{type_info} {masked}"
 
 
