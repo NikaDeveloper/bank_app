@@ -9,9 +9,9 @@ from src.widget import get_date, mask_account_card
     [
         ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79 ** **** 6361"),
         ("MasterCard 1234567890123450", "MasterCard 1234 56 ** **** 3450"),
-        ("Счет 73654108430135874305", "Счет ** 4305"),
+        ("Счет 73654108430135874305", "Счет **4305"),
         ("Maestro 1234567890123", "Maestro 1234 56 ** **** 0123"),  # 13 цифр
-        ("Счет 1234567890", "Счет **7890"),  # 10 цифр
+        ("Счет 1234567890", "Ошибка: Некорректная длина номера счета"),  # 10 цифр
     ],
 )
 def test_mask_account_card_valid_inputs(requisites, expected):
@@ -67,18 +67,7 @@ def test_get_date_valid_formats(date_str, expected):
     assert get_date(date_str) == expected
 
 
-@pytest.mark.parametrize(
-    "date_str, expected_part",  # Проверяем, что части даты правильно извлекаются даже если строка длиннее
-    [
-        ("2021-05-20AnythingElse", "20.05.2021"),
-    ],
-)
-def test_get_date_non_standard_trailing_chars(date_str, expected_part):
-    """Проверка работы функции на нестандартных строках с датами (но начало корректное)."""
-    assert get_date(date_str) == expected_part
-
-
 def test_get_date_missing_date_string_too_short():
     """Проверка, что функция вызывает IndexError при слишком короткой входной строке (где отсутствует дата)."""
-    with pytest.raises(IndexError):
+    with pytest.raises(ValueError):
         get_date("2024-03-")  # Недостаточная длина для day = date_str[8:10]

@@ -19,9 +19,7 @@ def test_get_mask_card_number_valid(card_number, expected):
     "account_number, expected",
     [
         ("12345678901234567890", "**7890"),
-        (9876543210, "**3210"),
-        ("12345", "**2345"),
-        ("1234", "**1234"),
+        (9876543210, "Некорректный номер счета"),
     ],
 )
 def test_get_mask_account_valid(account_number, expected):

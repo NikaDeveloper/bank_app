@@ -19,7 +19,8 @@ def get_mask_card_number(card_number: Union[str, int]) -> str:
 def get_mask_account(account_number: Union[str, int]) -> str:
     """Маскирует номер банковского счета в формате **XXXX."""
     account_number_str = str(account_number)
-    if not account_number_str.isdigit():
+    print(account_number_str)
+    if not account_number_str.isdigit() or len(account_number_str) < 16:
         return "Некорректный номер счета"
     return f"**{account_number_str[-4:]}"
 
