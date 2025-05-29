@@ -86,3 +86,19 @@ descriptions = transaction_descriptions(list_desc)
 
 for _ in range(5):
     print(next(descriptions))
+
+
+def card_number_generator(start, end):
+    """
+    Генератор, который выдает номера банковских карт в формате XXXX XXXX XXXX XXXX,
+    где X — цифра. Диапазон задается аргументами start и end.
+    """
+    for number in range(start, end + 1):
+        card_number = f"{number:016d}"  # форматируем в строку длиной 16 с ведущими нулями
+        formatted = f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:]}"
+        yield formatted
+
+
+for num in card_number_generator(1, 5):
+    print(num)
+
