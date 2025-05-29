@@ -11,7 +11,6 @@ def filter_by_currency(list_transactions, currency):
         ):
             yield trx
 
-
 transactions = [
     {
         "id": 939719570,
@@ -72,7 +71,6 @@ def transaction_descriptions(gen_desc):
     for trx in gen_desc:
         description = trx.get("description", "Без описания")
         yield description
-
 
 list_desc = [
     {"description": "Перевод организации"},
