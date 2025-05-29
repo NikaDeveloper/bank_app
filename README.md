@@ -1,19 +1,19 @@
-# Data Processing Toolkit
+# Widget Project
 
 ## Описание
 
-Этот проект представляет собой набор инструментов для обработки данных, в частности, списков словарей. В текущей версии реализованы функции для фильтрации и сортировки данных.
-
+IT-отдел крупного банка делает новую фичу для личного кабинета клиента. 
+Это виджет, который показывает несколько последних успешных банковских операций клиента.
 ## Установка
 
 1.  Клонируйте репозиторий:
     ```bash
-    [git clone] (<https://github.com/NikaDeveloper/project10.11>)
+    [git clone] (-> git@github.com:NikaDeveloper/bank_app.git <-)
     ```
 
 2.  Перейдите в директорию проекта:
     ```bash
-    cd package-name
+    cd bank_app
     ```
 
 3.  Установите зависимости с помощью Poetry:
@@ -85,22 +85,9 @@ pprint(sorted_data_asc)
 
 # Зависимости 
 
-+ certifi 
-+ requests
-+ idna
-+ numpy
-+ charset-normalizer
-+ urllib3
+Установленные зависимости можно посмотреть в pyproject.toml.
 
-## Структура проекта
 
-``` package-name/
-├── src/
-│   └── processing.py
-└── README.md
-└── pyproject.toml
-└── poetry.lock
-```
 ## Тестирование
 
 Для запуска тестов:
