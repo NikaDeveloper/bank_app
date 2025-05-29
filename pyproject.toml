@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "app-tests"
+name = "bank_app"
 version = "0.1.0"
 description = ""
 authors = ["Nika Alexandrovna <megrelynika@gmail.com>"]

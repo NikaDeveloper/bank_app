@@ -1,9 +1,9 @@
-def filter_by_currency(transactions, currency):
+def filter_by_currency(list_transactions, currency):
     """
     Функция, которая принимает на вход список словарей, представляющих транзакции.
     Функция возвращает итератор, который поочередно выдает транзакции, где валюта операции соответствует заданной.
     """
-    for trx in transactions:
+    for trx in list_transactions:
         if (
                 "operationAmount" in trx
                 and "currency" in trx["operationAmount"]
@@ -63,3 +63,26 @@ transactions = [
 usd_transactions = filter_by_currency(transactions, "USD")
 for _ in range(2):
     print(next(usd_transactions))
+
+
+def transaction_descriptions(gen_desc):
+    """
+    Генератор, который по очереди возвращает описание каждой транзакции из списка.
+    """
+    for trx in gen_desc:
+        description = trx.get("description", "Без описания")
+        yield description
+
+
+list_desc = [
+    {"description": "Перевод организации"},
+    {"description": "Перевод со счета на счет"},
+    {"description": "Перевод со счета на счет"},
+    {"description": "Перевод с карты на карту"},
+    {"description": "Перевод организации"},
+]
+
+descriptions = transaction_descriptions(list_desc)
+
+for _ in range(5):
+    print(next(descriptions))
