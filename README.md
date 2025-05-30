@@ -1,19 +1,19 @@
-# Data Processing Toolkit
+# Widget Project
 
 ## Описание
 
-Этот проект представляет собой набор инструментов для обработки данных, в частности, списков словарей. В текущей версии реализованы функции для фильтрации и сортировки данных.
-
+IT-отдел крупного банка делает новую фичу для личного кабинета клиента. 
+Это виджет, который показывает несколько последних успешных банковских операций клиента.
 ## Установка
 
 1.  Клонируйте репозиторий:
     ```bash
-    [git clone] (<https://github.com/NikaDeveloper/project10.11>)
+    [git clone] (-> git@github.com:NikaDeveloper/bank_app.git <-)
     ```
 
 2.  Перейдите в директорию проекта:
     ```bash
-    cd package-name
+    cd bank_app
     ```
 
 3.  Установите зависимости с помощью Poetry:
@@ -22,85 +22,27 @@
     ```
     *(Убедитесь, что у вас установлен Poetry)*
 
-## Использование
-
-### `filter_by_state(list_of_dicts: list[dict], state: str = "EXECUTED") -> list[dict]`
-
-Фильтрует список словарей по значению ключа `'state'`. Возвращает новый список, содержащий только те словари, где значение `'state'` соответствует указанному. По умолчанию фильтрует по `'EXECUTED'`.
-
-**Пример:**
-
-```python
-from pprint import pprint
-from src.processing import filter_by_state
-
-data = [
-    {'id': 1, 'state': 'EXECUTED', 'value': 10},
-    {'id': 2, 'state': 'PENDING', 'value': 20},
-    {'id': 3, 'state': 'EXECUTED', 'value': 30}
-]
-
-executed_items = filter_by_state(data)
-pprint(executed_items)
-# Вывод:
-# [{'id': 1, 'state': 'EXECUTED', 'value': 10},
-#  {'id': 3, 'state': 'EXECUTED', 'value': 30}]
-
-pending_items = filter_by_state(data, state='PENDING')
-pprint(pending_items)
-# Вывод:
-# [{'id': 2, 'state': 'PENDING', 'value': 20}]
-```
-
-### `sort_by_date(list_of_dicts: list[dict], desc: bool = True) -> list[dict]`
-
-Сортирует список словарей по значению ключа 'date'. По умолчанию сортирует по убыванию (desc=True).
-
-**Пример:**
-
-```python
-from pprint import pprint
-from src.processing import sort_by_date
-
-data = [
-    {'id': 1, 'date': '2025-05-11'},
-    {'id': 2, 'date': '2025-05-10'},
-    {'id': 3, 'date': '2025-05-12'}
-]
-
-sorted_data_desc = sort_by_date(data)
-pprint(sorted_data_desc)
-# Вывод:
-# [{'date': '2025-05-12', 'id': 3},
-#  {'date': '2025-05-11', 'id': 1},
-#  {'date': '2025-05-10', 'id': 2}]
-
-sorted_data_asc = sort_by_date(data, desc=False)
-pprint(sorted_data_asc)
-# Вывод:
-# [{'date': '2025-05-10', 'id': 2},
-#  {'date': '2025-05-11', 'id': 1},
-#  {'date': '2025-05-12', 'id': 3}]
-```
 
 # Зависимости 
 
-+ certifi 
-+ requests
-+ idna
-+ numpy
-+ charset-normalizer
-+ urllib3
+Установленные зависимости можно посмотреть в pyproject.toml.
 
-## Структура проекта
+## Модуль generators
 
-``` package-name/
-├── src/
-│   └── processing.py
-└── README.md
-└── pyproject.toml
-└── poetry.lock
-```
+Реализованы генераторы:
+
+- `filter_by_currency` — фильтрует транзакции по валюте.
+- `transaction_descriptions` — возвращает описания транзакций.
+- `card_number_generator` — создает отформатированные номера карт в заданном диапазоне.
+
+### Примеры использования
+
+```python
+list(filter_by_currency(transactions, "USD"))
+list(transaction_descriptions(transactions))
+list(card_number_generator(1, 3))
+
+
 ## Тестирование
 
 Для запуска тестов:

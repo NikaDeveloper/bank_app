@@ -25,11 +25,11 @@ def get_mask_account(account_number: Union[str, int]) -> str:
     return f"**{account_number_str[-4:]}"
 
 
-if __name__ == "__main__":
-    card = "1234567890123456"
-    masked_card = get_mask_card_number(card)
-    print(f"Маскированный номер карты: {masked_card}")
-
-    account = "9876543210"
-    masked_account = get_mask_account(account)
-    print(f"Маскированный номер счета: {masked_account}")
+# if __name__ == "__main__":
+#     card = "1234567890123456"
+#     masked_card = get_mask_card_number(card)
+#     print(f"Маскированный номер карты: {masked_card}")
+#
+#     account = "9876543210"
+#     masked_account = get_mask_account(account)
+#     print(f"Маскированный номер счета: {masked_account}")
