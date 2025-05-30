@@ -30,3 +30,24 @@ def operations_for_sorting():
         {"id": 7, "state": "EXECUTED", "date": "2017-01-01T00:00:00.000000"},
         {"id": 8, "state": "EXECUTED"},
     ]
+
+
+@pytest.fixture
+def usd_transactions():
+    return [
+        {"operationAmount": {"currency": {"code": "USD"}}, "id": 1},
+        {"operationAmount": {"currency": {"code": "EUR"}}, "id": 2},
+    ]
+
+
+@pytest.fixture
+def transaction_data():
+    return [
+        {"description": "Покупка в магазине"},
+        {"some_key": "нет описания"},
+    ]
+
+
+@pytest.fixture
+def card_range():
+    return 1000, 1003
