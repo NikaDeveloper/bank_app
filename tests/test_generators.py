@@ -1,16 +1,22 @@
 import pytest
 
-from src.generators import (card_number_generator, filter_by_currency,
-                            transaction_descriptions)
+from src.generators import (
+    card_number_generator,
+    filter_by_currency,
+    transaction_descriptions,
+)
 
 # ----------------- Тесты для filter_by_currency -----------------
+
 
 @pytest.mark.parametrize(
     "transactions,currency,expected_ids",
     [
         (
-            [{"operationAmount": {"currency": {"code": "USD"}}, "id": 1},
-             {"operationAmount": {"currency": {"code": "EUR"}}, "id": 2}],
+            [
+                {"operationAmount": {"currency": {"code": "USD"}}, "id": 1},
+                {"operationAmount": {"currency": {"code": "EUR"}}, "id": 2},
+            ],
             "USD",
             [1],
         ),
@@ -44,6 +50,7 @@ def test_filter_by_currency_with_fixture(usd_transactions):
 
 # ----------------- Тесты для transaction_descriptions -----------------
 
+
 @pytest.mark.parametrize(
     "input_data,expected",
     [
@@ -63,6 +70,7 @@ def test_transaction_descriptions_with_fixture(transaction_data):
 
 
 # ----------------- Тесты для card_number_generator -----------------
+
 
 @pytest.mark.parametrize(
     "start,end,expected",

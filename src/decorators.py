@@ -1,5 +1,5 @@
-import functools
 import datetime
+import functools
 
 
 def log(filename=None):
@@ -21,5 +21,7 @@ def log(filename=None):
                         f.write(log_message + "\n")
                 else:
                     print(log_message)
+
         return wrapper
+
     return my_decorator

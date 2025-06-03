@@ -1,5 +1,7 @@
 import pytest
+
 from src.decorators import log
+
 
 # Тестируем функцию без ошибок, лог должен пойти в консоль
 def test_log_success_console(capsys):
