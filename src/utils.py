@@ -1,5 +1,10 @@
 import json
 
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 
 def get_path_json(path_json_file: str) -> list[dict]:
     """Принимает путь json-файла и возвращает список словарей с данными о финансовых транзакциях"""

@@ -172,4 +172,5 @@ cython_debug/
 .pypirc
 .idea
 .DS_Store
-
+.coverage
+htmlcov/
