@@ -12,16 +12,16 @@ from src.masks import get_mask_account, get_mask_card_number
     ],
 )
 def test_get_mask_card_number_valid(card_number, expected, caplog):
+    """Проверяет на валидность"""
     with caplog.at_level("DEBUG"):
         result = get_mask_card_number(card_number)
     assert result == expected
     assert "Успешная маскировка карты" in caplog.text
 
-@pytest.mark.parametrize(
-    "invalid_card",
-    ['abcd1234', "1234-5678", "", None]
-)
+
+@pytest.mark.parametrize("invalid_card", ["abcd1234", "1234-5678", "", None])
 def test_get_card_number_invalid(invalid_card, caplog):
+    """Проверяет на невалидность"""
     with caplog.at_level("ERROR"):
         result = get_mask_card_number(invalid_card)
     assert result == "Некорректный номер карты"
@@ -36,6 +36,7 @@ def test_get_card_number_invalid(invalid_card, caplog):
     ],
 )
 def test_get_mask_account_valid(account_number, expected, caplog):
+    """Проверяет на валидность"""
     with caplog.at_level("DEBUG"):
         result = get_mask_account(account_number)
     assert result == expected
@@ -58,6 +59,7 @@ def test_get_mask_account_valid(account_number, expected, caplog):
     ],
 )
 def test_get_mask_account_invalid_input(invalid_input, expected_message, caplog):
+    """Проверяет на невалидность"""
     with caplog.at_level("ERROR"):
         result = get_mask_account(invalid_input)
     assert result == expected_message

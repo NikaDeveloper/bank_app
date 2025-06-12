@@ -1,16 +1,15 @@
-from typing import Union
 import logging
+from typing import Union
 
-from pycparser.ply.yacc import resultlimit
 
-# настройка логера
+# настройка логера для masks
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-file_handler = logging.FileHandler("logs/masks.log", 'w')
+file_handler = logging.FileHandler("logs/masks.log", "w")
 file_formatter = logging.Formatter(
-    fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt="%Y-%m-%d %H-%M-%S"
+    fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H-%M-%S",
 )
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
