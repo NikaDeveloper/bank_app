@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-file_handler = logging.FileHandler("logs/utils.log", "w")
+file_handler = logging.FileHandler("logs/utils.log", "w", encoding="utf8")
 file_formatter = logging.Formatter(
     fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%Y-%m-%d %H-%M-%S",
