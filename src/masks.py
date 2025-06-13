@@ -1,11 +1,28 @@
+import logging
 from typing import Union
+
+
+# настройка логера для masks
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+file_handler = logging.FileHandler("logs/masks.log", "w", encoding="utf8")
+file_formatter = logging.Formatter(
+    fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H-%M-%S",
+)
+file_handler.setFormatter(file_formatter)
+logger.addHandler(file_handler)
 
 
 def get_mask_card_number(card_number: Union[str, int]) -> str:
     """Маскирует номер банковской карты в формате XXXX XX** **** XXXX."""
     card_number_str = str(card_number)
+
     if not card_number_str.isdigit():
+        logger.error(f"Невалидный номер карты: {card_number}")
         return "Некорректный номер карты"
+
     masked_parts = [
         card_number_str[:4],
         card_number_str[4:6],
@@ -13,23 +30,19 @@ def get_mask_card_number(card_number: Union[str, int]) -> str:
         "****",
         card_number_str[-4:],
     ]
-    return " ".join(masked_parts)
+    result = " ".join(masked_parts)
+    logger.debug(f"Успешная маскировка карты: {card_number} -> {result}")
+    return result
 
 
 def get_mask_account(account_number: Union[str, int]) -> str:
     """Маскирует номер банковского счета в формате **XXXX."""
     account_number_str = str(account_number)
-    print(account_number_str)
+
     if not account_number_str.isdigit() or len(account_number_str) < 16:
+        logger.error(f"Невалидный номер счета: {account_number}")
         return "Некорректный номер счета"
-    return f"**{account_number_str[-4:]}"
 
-
-# if __name__ == "__main__":
-#     card = "1234567890123456"
-#     masked_card = get_mask_card_number(card)
-#     print(f"Маскированный номер карты: {masked_card}")
-#
-#     account = "9876543210"
-#     masked_account = get_mask_account(account)
-#     print(f"Маскированный номер счета: {masked_account}")
+    result = f"**{account_number_str[-4:]}"
+    logger.debug(f"Успешная маскировка счета: {account_number} -> {result}")
+    return result
