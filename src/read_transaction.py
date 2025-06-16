@@ -5,7 +5,7 @@ def read_finance_operations_csv(path_file: str) -> list[dict]:
     """Считывает финансовые операции из CSV-файла и возвращает список словарей"""
     try:
 
-        df = pd.read_csv(path_file)
+        df = pd.read_csv(path_file, delimiter=";")
 
         df.columns = df.columns.astype(str)
         return df.to_dict(orient="records")
