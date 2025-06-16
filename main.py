@@ -1,7 +1,5 @@
-from src.read_transaction import (
-    read_finance_operations_csv,
-    read_finance_operations_excel,
-)
+from src.read_transaction import (read_finance_operations_csv,
+                                  read_finance_operations_excel)
 
 csv_file_path = "src/transactions.csv"
 excel_file_path = "src/transactions_excel.xlsx"
