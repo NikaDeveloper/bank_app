@@ -30,7 +30,7 @@ def test_read_csv_transactions(mock_read_csv):
     # Проверяем, что функция вернула то, что мы ожидали
     assert result == EXPECTED_TRANSACTIONS
     # Проверяем, что mock был вызван с правильным путем к файлу
-    mock_read_csv.assert_called_once_with("dummy_path.csv")
+    mock_read_csv.assert_called_once_with("dummy_path.csv", delimiter=";")
 
 
 @patch(f"{PD_PATH}.read_excel")

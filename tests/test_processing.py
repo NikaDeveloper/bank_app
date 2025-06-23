@@ -1,6 +1,7 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import (filter_by_state, process_bank_operations,
+                            process_bank_search, sort_by_date)
 
 
 # Тесты для filter_by_state
@@ -142,12 +143,6 @@ def test_sort_by_date_with_malformed_date_strings(operations_for_sorting):
     assert any(item["date"] == "invalid-date-format" for item in result_desc)
     assert any(item["date"] == "invalid-date-format" for item in result_asc)
 
-    # Примерное ожидание для descending (зависит от других дат)
-    # "invalid..." скорее всего будет после "20..."
-    # Для ascending "invalid..." скорее всего будет до "20..."
-    # Точное положение зависит от конкретных строк дат
-    # Пример: ['2020...', '2019...', 'invalid...'] (desc) или ['invalid...', '2017...', '2018...'] (asc)
-
     # Убедимся, что сортировка выполнена и не было ошибки
     assert isinstance(result_desc, list)
     assert isinstance(result_asc, list)
@@ -156,3 +151,88 @@ def test_sort_by_date_with_malformed_date_strings(operations_for_sorting):
 def test_sort_by_date_empty_list():
     """Тестирование сортировки пустого списка."""
     assert sort_by_date([]) == []
+
+
+@pytest.fixture
+def search_data():
+    return [
+        {"description": "Оплата кофе"},
+        {"description": "Покупка книг"},
+        {"description": "Кофе в офисе"},
+        {"description": "Магазин продуктов"},
+        {"description": ""},
+        {},
+    ]
+
+
+@pytest.fixture
+def operations_data():
+    return [
+        {"description": "Оплата кофе"},
+        {"description": "Кофейня на углу"},
+        {"description": "Покупка книг"},
+        {"description": "Книги и журналы"},
+        {"description": "Магазин"},
+        {"description": "КОФЕ"},
+    ]
+
+
+# ---------- Тесты для process_bank_search ----------
+
+
+def test_process_bank_search_found(search_data):
+    result = process_bank_search(search_data, "кофе")
+    assert len(result) == 2
+    assert all("кофе" in item["description"].lower() for item in result)
+
+
+def test_process_bank_search_not_found(search_data):
+    result = process_bank_search(search_data, "машина")
+    assert result == []
+
+
+def test_process_bank_search_empty_description(search_data):
+    result = process_bank_search(search_data, "кофе")
+    assert any(
+        item.get("description", "") == "Кофе"
+        or "кофе" in item.get("description", "").lower()
+        for item in result
+    )
+
+
+# ---------- Тесты для process_bank_operations ----------
+
+
+def test_process_bank_operations_basic(operations_data):
+    categories = ["кофе", "книги"]
+    result = process_bank_operations(operations_data, categories)
+    assert result == {"кофе": 3, "книги": 1}
+
+
+def test_process_bank_operations_case_insensitive():
+    data = [
+        {"description": "Оплата КОФЕ"},
+        {"description": "кофе"},
+    ]
+    result = process_bank_operations(data, ["Кофе"])
+    assert result == {"Кофе": 2}
+
+
+def test_process_bank_operations_no_matches():
+    data = [
+        {"description": "Бензин"},
+        {"description": "Еда"},
+    ]
+    result = process_bank_operations(data, ["Кофе", "Книги"])
+    assert result == {"Кофе": 0, "Книги": 0}
+
+
+def test_process_bank_operations_empty_data():
+    result = process_bank_operations([], ["еда", "кофе"])
+    assert result == {"еда": 0, "кофе": 0}
+
+
+def test_process_bank_operations_empty_categories():
+    data = [{"description": "Что-то"}]
+    result = process_bank_operations(data, [])
+    assert result == {}
