@@ -174,8 +174,8 @@ cython_debug/
 .DS_Store
 .coverage
 htmlcov/
-src/transactions.csv
-src/transactions_excel.xlsx
+data/transactions.csv
+data/transactions_excel.xlsx
 .xlsx
 .csv
 .log
