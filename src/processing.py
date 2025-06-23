@@ -1,6 +1,5 @@
-from pprint import pprint
-
 import re
+from pprint import pprint
 
 
 def filter_by_state(list_of_dicts: list[dict], state: str = "EXECUTED") -> list[dict]:
@@ -54,17 +53,24 @@ pprint(filter_by_state(input_data))
 pprint(sort_by_date(input_data))
 
 
-def process_bank_search(data:list[dict], search:str) -> list[dict]:
+def process_bank_search(data: list[dict], search: str) -> list[dict]:
     """Возвращает список словарей, у которых в описании есть строка поиска"""
     pattern = re.compile(re.escape(search), re.IGNORECASE)
-    return [operation for operation in data if pattern.search(operation.get("description", ""))]
+    return [
+        operation
+        for operation in data
+        if pattern.search(operation.get("description", ""))
+    ]
 
 
 def process_bank_operations(data: list[dict], categories: list) -> dict:
     """Возвращает словарь, в котором ключи — это названия категорий,
     а значения — это количество операций в каждой категории."""
     result = {category: 0 for category in categories}
-    patterns = {category: re.compile(re.escape(category), re.IGNORECASE) for category in categories}
+    patterns = {
+        category: re.compile(re.escape(category), re.IGNORECASE)
+        for category in categories
+    }
 
     for operation in data:
         description = operation.get("description", "")

@@ -1,11 +1,14 @@
-from src.read_transaction import read_finance_operations_csv, read_finance_operations_excel
-from src.widget import mask_account_card, get_date
-from src.processing import process_bank_search, filter_by_state, sort_by_date
 import json
 import os
 
+from src.processing import filter_by_state, process_bank_search, sort_by_date
+from src.read_transaction import (read_finance_operations_csv,
+                                  read_finance_operations_excel)
+from src.widget import get_date, mask_account_card
+
 VALID_STATUSES = {"EXECUTED", "CANCELED", "PENDING"}
 DATA_DIR = "data"
+
 
 def read_json_transactions(path: str) -> list[dict]:
     try:
@@ -14,6 +17,7 @@ def read_json_transactions(path: str) -> list[dict]:
     except Exception as e:
         print(f"Ошибка чтения JSON: {e}")
         return []
+
 
 def main():
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
@@ -42,7 +46,9 @@ def main():
 
     # Фильтрация по статусу
     while True:
-        status = input("Введите статус, по которому необходимо выполнить фильтрацию (EXECUTED, CANCELED, PENDING): ").upper()
+        status = input(
+            "Введите статус, по которому необходимо выполнить фильтрацию (EXECUTED, CANCELED, PENDING): "
+        ).upper()
         if status in VALID_STATUSES:
             break
         print(f'Программа: Статус операции "{status}" недоступен.')
@@ -51,19 +57,39 @@ def main():
     print(f'Программа: Операции отфильтрованы по статусу "{status}"')
 
     # Сортировка по дате
-    sort_input = input("Программа: Отсортировать операции по дате? Да/Нет: ").strip().lower()
+    sort_input = (
+        input("Программа: Отсортировать операции по дате? Да/Нет: ").strip().lower()
+    )
     if sort_input in {"да", "yes", "y"}:
-        order_input = input("Программа: Отсортировать по возрастанию или по убыванию? ").strip().lower()
+        order_input = (
+            input("Программа: Отсортировать по возрастанию или по убыванию? ")
+            .strip()
+            .lower()
+        )
         desc = order_input != "по возрастанию"
         data = sort_by_date(data, desc=desc)
 
     # Фильтрация по валюте
-    currency_input = input("Программа: Выводить только рублевые транзакции? Да/Нет: ").strip().lower()
+    currency_input = (
+        input("Программа: Выводить только рублевые транзакции? Да/Нет: ")
+        .strip()
+        .lower()
+    )
     if currency_input in {"да", "yes", "y"}:
-        data = [op for op in data if op.get("operationAmount", {}).get("currency", {}).get("code") == "RUB"]
+        data = [
+            op
+            for op in data
+            if op.get("operationAmount", {}).get("currency", {}).get("code") == "RUB"
+        ]
 
     # Фильтрация по описанию
-    search_input = input("Программа: Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ").strip().lower()
+    search_input = (
+        input(
+            "Программа: Отфильтровать список транзакций по определенному слову в описании? Да/Нет: "
+        )
+        .strip()
+        .lower()
+    )
     if search_input in {"да", "yes", "y"}:
         keyword = input("Введите ключевое слово для поиска в описании: ").strip()
         data = process_bank_search(data, keyword)
@@ -71,7 +97,9 @@ def main():
     # Вывод результата
     print("\nПрограмма: Распечатываю итоговый список транзакций...\n")
     if not data:
-        print("Программа: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+        print(
+            "Программа: Не найдено ни одной транзакции, подходящей под ваши условия фильтрации"
+        )
         return
 
     print(f"Программа: Всего банковских операций в выборке: {len(data)}\n")
@@ -87,15 +115,20 @@ def main():
         from_raw = item.get("from", "Счет неизвестен")
         to_raw = item.get("to", "Счет неизвестен")
 
-        from_acc = mask_account_card(from_raw) if from_raw != "Счет неизвестен" else from_raw
+        from_acc = (
+            mask_account_card(from_raw) if from_raw != "Счет неизвестен" else from_raw
+        )
         to_acc = mask_account_card(to_raw) if to_raw != "Счет неизвестен" else to_raw
 
-        amount = item.get("operationAmount", {}).get("amount") or item.get('amount')
-        currency = item.get("operationAmount", {}).get("currency", {}).get("name") or item.get('currency_name')
+        amount = item.get("operationAmount", {}).get("amount") or item.get("amount")
+        currency = item.get("operationAmount", {}).get("currency", {}).get(
+            "name"
+        ) or item.get("currency_name")
 
         print(f"{date} {description}")
         print(f"{from_acc} -> {to_acc}")
         print(f"Сумма: {amount} {currency}\n")
+
 
 if __name__ == "__main__":
     main()
