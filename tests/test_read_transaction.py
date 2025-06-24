@@ -2,8 +2,10 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from src.read_transaction import (read_finance_operations_csv,
-                                  read_finance_operations_excel)
+from src.read_transaction import (
+    read_finance_operations_csv,
+    read_finance_operations_excel,
+)
 
 # Ожидаемый результат, который должны вернуть наши функции
 EXPECTED_TRANSACTIONS = [

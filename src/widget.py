@@ -39,11 +39,3 @@ def get_date(date_str: str) -> str:
         return formatted_date
     else:
         raise ValueError("Неверный формат даты")
-
-
-print(mask_account_card("Visa Platinum 7000792289606361"))
-print(mask_account_card("Счет 73654108430135874305"))
-print(mask_account_card("Maestro 1596837868705199"))
-print(mask_account_card("Счет 123"))  # Пример некорректной длины счета
-print(mask_account_card("Invalid 7000ABC1234DEF5678"))  # Пример нецифрового номера
-print(get_date("2024-03-11T02:26:18.671407"))
