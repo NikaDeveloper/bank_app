@@ -2,8 +2,10 @@ import json
 import os
 
 from src.processing import filter_by_state, process_bank_search, sort_by_date
-from src.read_transaction import (read_finance_operations_csv,
-                                  read_finance_operations_excel)
+from src.read_transaction import (
+    read_finance_operations_csv,
+    read_finance_operations_excel,
+)
 from src.widget import get_date, mask_account_card
 
 VALID_STATUSES = {"EXECUTED", "CANCELED", "PENDING"}
